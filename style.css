@@ -1,0 +1,297 @@
+/* Style the body and overall page */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+/* Style the header section */
+header {
+  background: linear-gradient(135deg, #0071c5 0%, #0056a8 100%);
+  padding: 60px 20px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 10px 40px rgba(0, 113, 197, 0.2);
+}
+
+/* Resize the Intel logo SVG */
+header img {
+  width: 120px;
+  height: auto;
+  margin-bottom: 30px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+header img:hover {
+  transform: scale(1.05);
+}
+
+/* Style the main heading */
+header h1 {
+  font-size: 42px;
+  margin: 20px 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* Style the header paragraph */
+header p {
+  font-size: 18px;
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 20px auto 0;
+  font-weight: 300;
+  opacity: 0.95;
+}
+
+/* Style the timeline section */
+section {
+  padding: 60px 20px;
+  background: transparent;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 25px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Style individual timeline cards */
+section > div {
+  background-color: white;
+  border-left: 8px solid #0071c5;
+  padding: 30px;
+  /* Fixed width for cards to enable horizontal scrolling */
+  min-width: 340px;
+  width: 340px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Snap effect when scrolling */
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  /* Set max height to hide overflow on hover reveal */
+  max-height: 450px;
+  overflow: hidden;
+  position: relative;
+}
+
+section > div:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 48px rgba(0, 113, 197, 0.15);
+  max-height: none;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+  border-left-width: 12px;
+}
+
+/* Style card headings */
+section h2 {
+  color: #0071c5;
+  font-size: 28px;
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+section h3 {
+  color: #1a1a1a;
+  font-size: 22px;
+  margin: 8px 0 16px 0;
+  font-weight: 600;
+}
+
+/* Style card images */
+section img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  margin: 20px 0;
+  object-fit: cover;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+/* Hide images on hover to show text */
+section > div:hover img {
+  display: none;
+}
+
+/* Style card paragraphs */
+section p {
+  line-height: 1.8;
+  color: #444;
+  font-size: 16px;
+  font-weight: 400;
+  flex-grow: 1;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+/* Show text on hover */
+section > div:hover p {
+  display: block;
+  opacity: 1;
+}
+
+/* Style the footer message */
+body > p {
+  text-align: center;
+  padding: 30px 20px;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Style card icons */
+.card-icon {
+  color: #0071c5;
+  font-size: 32px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* Style scroll icons in footer */
+.scroll-icon {
+  color: #0071c5;
+  font-size: 20px;
+  animation: slideHorizontal 1.5s infinite;
+}
+
+/* Horizontal slide animation for scroll icons */
+@keyframes slideHorizontal {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+}
+
+
+
+/* Responsive Design for Mobile Devices */
+@media (max-width: 768px) {
+  /* Stack cards vertically on small screens */
+  section {
+    padding: 40px 15px;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+  }
+
+  section > div {
+    width: 100%;
+    max-width: 380px;
+    min-width: auto;
+    max-height: none;
+    padding: 20px;
+  }
+
+  section > div:hover {
+    max-height: none;
+  }
+
+  /* Show images on mobile */
+  section > div img {
+    display: block !important;
+  }
+
+  section > div p {
+    display: block !important;
+  }
+
+  /* Adjust header for mobile */
+  header h1 {
+    font-size: 32px;
+  }
+
+  header p {
+    font-size: 16px;
+  }
+
+  /* Adjust card headings for mobile */
+  section h2 {
+    font-size: 24px;
+  }
+
+  section h3 {
+    font-size: 18px;
+  }
+
+  /* Adjust card icon size */
+  .card-icon {
+    font-size: 28px;
+  }
+}
+
+/* Responsive Design for Extra Small Devices */
+@media (max-width: 480px) {
+  body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #b4c7e5 100%);
+  }
+
+  header {
+    padding: 40px 15px;
+  }
+
+  header h1 {
+    font-size: 28px;
+    margin: 15px 0;
+  }
+
+  header p {
+    font-size: 14px;
+  }
+
+  header img {
+    width: 100px;
+    margin-bottom: 20px;
+  }
+
+  section > div {
+    max-width: 320px;
+    padding: 18px;
+    border-radius: 15px;
+  }
+
+  section h2 {
+    font-size: 22px;
+  }
+
+  section h3 {
+    font-size: 16px;
+  }
+
+  section p {
+    font-size: 15px;
+  }
+
+  .card-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  body > p {
+    padding: 20px 15px;
+    font-size: 13px;
+  }
+
+  .scroll-icon {
+    font-size: 18px;
+  }
+}
