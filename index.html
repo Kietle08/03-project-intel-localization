@@ -1,17 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Intel: Sustainability Through the Ages</title>
+  <!-- Bootstrap LTR (default for English) -->
+  <link id="bootstrap-ltr" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+  <!-- Bootstrap RTL (enabled when dir="rtl") -->
+  <link id="bootstrap-rtl" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" disabled />
   <link rel="stylesheet" href="style.css" />
   <!-- Google Material Icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-</head>
-<body>
+
+  <!-- Language Detection & RTL Layout Script -->
+  <script>
+    // RTL (Right-to-Left) languages
+    const RTL_LANGUAGES = ['ar', 'ar-AE', 'ar-BH', 'ar-DZ', 'ar-EG', 'ar-IQ', 'ar-JO', 'ar-KW',
+      'ar-LB', 'ar-LY', 'ar-MA', 'ar-OM', 'ar-QA', 'ar-SA', 'ar-SD', 'ar-SY', 'ar-TN', 'ar-YE',
+      'he', 'fa', 'ur', 'yi', 'ji', 'iw'];
+
+    // Check if language is RTL
+    function isRtlLanguage(langCode) {
+      if (!langCode) return false;
+      return RTL_LANGUAGES.some(rtl => langCode.toLowerCase().startsWith(rtl.toLowerCase()));
+    }
+
+    // Apply RTL or LTR layout
+    function applyLayout(isRtl) {
+      document.documentElement.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+      
+      const ltrLink = document.getElementById('bootstrap-ltr');
+      const rtlLink = document.getElementById('bootstrap-rtl');
+      if (ltrLink && rtlLink) {
+        ltrLink.disabled = isRtl;
+        rtlLink.disabled = !isRtl;
+      }
+      
+      document.body.classList.toggle('rtl-layout', isRtl);
+      document.body.classList.toggle('ltr-layout', !isRtl);
+    }
+
+    // Detect language changes and apply layout
+    function onLanguageChange() {
+      const lang = document.documentElement.getAttribute('lang') || 'en';
+      applyLayout(isRtlLanguage(lang));
+    }
+
+    // Watch for language changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'lang') {
+          onLanguageChange();
+        }
+      });
+    });
+
+    // Initialize
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        onLanguageChange();
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+      });
+    } else {
+      onLanguageChange();
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+    }
+  </script>
 
   <!-- Header / Hero Section -->
   <header>
+    <!-- Language Selector Dropdown -->
+    <div class="position-absolute top-0 end-0 m-3">
+      <div class="dropdown">
+        <button class="btn btn-link text-white p-0" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="Select Language">
+          <span class="material-icons" style="font-size: 28px; vertical-align: middle;">language</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+          <li><a class="dropdown-item" href="#" onclick="switchLanguage('en'); return false;">English (LTR)</a></li>
+          <li><a class="dropdown-item" href="#" onclick="switchLanguage('ar'); return false;">العربية (RTL)</a></li>
+          <li><a class="dropdown-item" href="#" onclick="switchLanguage('he'); return false;">עברית (RTL)</a></li>
+          <li><a class="dropdown-item" href="#" onclick="switchLanguage('fa'); return false;">فارسی (RTL)</a></li>
+          <li><a class="dropdown-item" href="#" onclick="switchLanguage('fr'); return false;">Français (LTR)</a></li>
+          <li><a class="dropdown-item" href="#" onclick="switchLanguage('es'); return false;">Español (LTR)</a></li>
+          <li><a class="dropdown-item" href="#" onclick="switchLanguage('de'); return false;">Deutsch (LTR)</a></li>
+          <li><a class="dropdown-item" href="#" onclick="switchLanguage('ja'); return false;">日本語 (LTR)</a></li>
+          <li><a class="dropdown-item" href="#" onclick="switchLanguage('zh'); return false;">中文 (LTR)</a></li>
+        </ul>
+      </div>
+    </div>
+
     <div>
       <!-- Ask Copilot to teach you about `.svg`. 🙂 You'll need to resize the logo with CSS. -->
       <img src="img/intel-header-logo.svg" alt="Intel Logo" />
@@ -29,8 +106,23 @@
     </div>
   </header>
 
-  <!-- Timeline Cards Section -->
-  <section>
+  <!-- Language switcher function -->
+  <script>
+    function switchLanguage(langCode) {
+      // Update the html lang attribute
+      document.documentElement.setAttribute('lang', langCode);
+    }
+  </script>
+
+  <!-- Timeline Scroll Controls and Cards Container -->
+  <div class="timeline-container">
+    <!-- Left Scroll Button -->
+    <button class="timeline-nav timeline-nav-left" id="scrollLeft" onclick="scrollTimeline(-1)" title="Scroll Left">
+      <span class="material-icons">chevron_left</span>
+    </button>
+
+    <!-- Timeline Cards Section -->
+    <section class="timeline" id="timelineScroll">
 
     <!-- Card 1: 1968 -->
     <div>
@@ -158,6 +250,173 @@
       </p>
     </div>
   </section>
+
+    <!-- Right Scroll Button -->
+    <button class="timeline-nav timeline-nav-right" id="scrollRight" onclick="scrollTimeline(1)" title="Scroll Right">
+      <span class="material-icons">chevron_right</span>
+    </button>
+  </div>
+
   <p><span class="material-icons scroll-icon">chevron_right</span> Scroll to view timeline | Hover over cards to learn more! <span class="material-icons scroll-icon">chevron_right</span></p>
+
+  <!-- New Bootstrap Grid Section (Three Columns) -->
+  <section class="container my-5">
+    <!-- Bootstrap row: stacks on small screens, three columns on medium+ -->
+    <div class="row g-4">
+      <!-- Column 1 -->
+      <div class="col-12 col-md-4">
+        <div class="p-4 border rounded bg-white h-100">
+          <h2 class="h4">
+            <span class="material-icons align-middle me-2">groups</span>
+            People
+          </h2>
+          <p>
+            Supporting employees and communities through education, equity, and
+            inclusive innovation.
+          </p>
+          <a class="btn btn-outline-primary btn-sm" href="#">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="col-12 col-md-4">
+        <div class="p-4 border rounded bg-white h-100">
+          <h2 class="h4">
+            <span class="material-icons align-middle me-2">eco</span>
+            Planet
+          </h2>
+          <p>
+            Reducing emissions, conserving water, and improving sustainable
+            manufacturing across operations.
+          </p>
+          <a class="btn btn-outline-primary btn-sm" href="#">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="col-12 col-md-4">
+        <div class="p-4 border rounded bg-white h-100">
+          <h2 class="h4">
+            <span class="material-icons align-middle me-2">trending_up</span>
+            Progress
+          </h2>
+          <p>
+            Advancing responsible technology with measurable goals and
+            transparent reporting.
+          </p>
+          <a class="btn btn-outline-primary btn-sm" href="#">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Newsletter Modal (Auto-loads on page load) -->
+  <div class="modal fade" id="newsletterModal" tabindex="-1" aria-labelledby="newsletterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="newsletterModalLabel">
+            <span class="material-icons align-middle me-2" style="vertical-align: middle;">mail</span>Subscribe to Our Newsletter
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-3">
+            Get monthly updates on Intel's sustainability goals, progress, and new initiatives.
+          </p>
+          <form id="newsletterForm">
+            <div class="mb-3">
+              <label class="form-label" for="modal-subscriber-name">Name</label>
+              <input class="form-control" type="text" id="modal-subscriber-name" name="name" placeholder="Your name" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="modal-subscriber-email">Email</label>
+              <input class="form-control" type="email" id="modal-subscriber-email" name="email" placeholder="you@example.com" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Maybe Later</button>
+          <button type="button" class="btn btn-primary" onclick="submitNewsletter()">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="container my-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+      <p class="mb-0">© 2026 Intel. All rights reserved.</p>
+      <nav class="d-flex gap-3">
+        <a class="text-decoration-none" href="#">Privacy Policy</a>
+        <a class="text-decoration-none" href="#">Terms of Use</a>
+        <a class="text-decoration-none" href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JavaScript Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Timeline Navigation Script -->
+  <script>
+    // Scroll timeline by a certain number of card widths
+    function scrollTimeline(direction) {
+      const timeline = document.getElementById('timelineScroll');
+      const scrollAmount = 360; // Card width + gap
+      const currentScroll = timeline.scrollLeft;
+      
+      timeline.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+
+    // Optional: Update button states based on scroll position
+    function updateScrollButtons() {
+      const timeline = document.getElementById('timelineScroll');
+      const scrollLeftBtn = document.getElementById('scrollLeft');
+      const scrollRightBtn = document.getElementById('scrollRight');
+      
+      // Disable left button at start
+      scrollLeftBtn.disabled = timeline.scrollLeft === 0;
+      // Disable right button at end
+      scrollRightBtn.disabled = 
+        timeline.scrollLeft >= (timeline.scrollWidth - timeline.clientWidth - 10);
+    }
+
+    // Initialize button states on page load
+    window.addEventListener('load', () => {
+      updateScrollButtons();
+      const timeline = document.getElementById('timelineScroll');
+      timeline.addEventListener('scroll', updateScrollButtons);
+    });
+  </script>
+
+  <!-- Auto-load newsletter modal and form submission -->
+  <script>
+    // Show newsletter modal on page load
+    window.addEventListener('load', () => {
+      const modal = new bootstrap.Modal(document.getElementById('newsletterModal'));
+      modal.show();
+    });
+
+    // Handle newsletter submission
+    function submitNewsletter() {
+      const name = document.getElementById('modal-subscriber-name').value;
+      const email = document.getElementById('modal-subscriber-email').value;
+      
+      if (name && email) {
+        alert(`Thank you for subscribing, ${name}! Check your email at ${email} for updates.`);
+        // Close the modal
+        bootstrap.Modal.getInstance(document.getElementById('newsletterModal')).hide();
+        // Clear form
+        document.getElementById('newsletterForm').reset();
+      } else {
+        alert('Please fill in all fields.');
+      }
+    }
+  </script>
 </body>
 </html>

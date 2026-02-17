@@ -14,6 +14,7 @@ header {
   text-align: center;
   color: white;
   box-shadow: 0 10px 40px rgba(0, 113, 197, 0.2);
+  position: relative;
 }
 
 /* Resize the Intel logo SVG */
@@ -47,8 +48,86 @@ header p {
   opacity: 0.95;
 }
 
+/* Language selector dropdown styling */
+#languageDropdown {
+  transition: transform 0.2s ease;
+}
+
+#languageDropdown:hover {
+  transform: scale(1.15);
+}
+
+#languageDropdown:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+}
+
+.dropdown-menu {
+  border: 2px solid #0071c5;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #0071c5;
+  color: white;
+}
+
+/* Timeline container with navigation buttons */
+.timeline-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+/* Timeline navigation buttons */
+.timeline-nav {
+  background-color: #0071c5;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 113, 197, 0.3);
+  font-size: 24px;
+  padding: 0;
+}
+
+.timeline-nav:hover:not(:disabled) {
+  background-color: #0056a8;
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 113, 197, 0.4);
+}
+
+.timeline-nav:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.timeline-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.timeline-nav .material-icons {
+  font-size: 24px;
+}
+
 /* Style the timeline section */
-section {
+.timeline {
+  flex: 1;
   padding: 60px 20px;
   background: transparent;
   display: flex;
@@ -63,7 +142,7 @@ section {
 }
 
 /* Style individual timeline cards */
-section > div {
+.timeline > div {
   background-color: white;
   border-left: 8px solid #0071c5;
   padding: 30px;
@@ -83,7 +162,7 @@ section > div {
   position: relative;
 }
 
-section > div:hover {
+.timeline > div:hover {
   transform: translateY(-8px);
   box-shadow: 0 16px 48px rgba(0, 113, 197, 0.15);
   max-height: none;
@@ -92,14 +171,14 @@ section > div:hover {
 }
 
 /* Style card headings */
-section h2 {
+.timeline h2 {
   color: #0071c5;
   font-size: 28px;
   margin: 0 0 8px 0;
   font-weight: 700;
 }
 
-section h3 {
+.timeline h3 {
   color: #1a1a1a;
   font-size: 22px;
   margin: 8px 0 16px 0;
@@ -107,7 +186,7 @@ section h3 {
 }
 
 /* Style card images */
-section img {
+.timeline img {
   width: 100%;
   height: auto;
   border-radius: 20px;
@@ -118,12 +197,12 @@ section img {
 }
 
 /* Hide images on hover to show text */
-section > div:hover img {
+.timeline > div:hover img {
   display: none;
 }
 
 /* Style card paragraphs */
-section p {
+.timeline p {
   line-height: 1.8;
   color: #444;
   font-size: 16px;
@@ -135,7 +214,7 @@ section p {
 }
 
 /* Show text on hover */
-section > div:hover p {
+.timeline > div:hover p {
   display: block;
   opacity: 1;
 }
@@ -183,38 +262,6 @@ body > p {
 
 /* Responsive Design for Mobile Devices */
 @media (max-width: 768px) {
-  /* Stack cards vertically on small screens */
-  section {
-    padding: 40px 15px;
-    gap: 20px;
-    flex-direction: column;
-    align-items: center;
-    overflow-x: hidden;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-  }
-
-  section > div {
-    width: 100%;
-    max-width: 380px;
-    min-width: auto;
-    max-height: none;
-    padding: 20px;
-  }
-
-  section > div:hover {
-    max-height: none;
-  }
-
-  /* Show images on mobile */
-  section > div img {
-    display: block !important;
-  }
-
-  section > div p {
-    display: block !important;
-  }
-
   /* Adjust header for mobile */
   header h1 {
     font-size: 32px;
@@ -224,12 +271,67 @@ body > p {
     font-size: 16px;
   }
 
+  /* Make language selector more accessible on mobile */
+  #languageDropdown {
+    padding: 8px !important;
+  }
+
+  /* Timeline container on mobile */
+  .timeline-container {
+    padding: 20px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Smaller navigation buttons on mobile */
+  .timeline-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .timeline-nav .material-icons {
+    font-size: 18px;
+  }
+
+  /* Stack cards vertically on small screens */
+  .timeline {
+    padding: 40px 15px;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+  }
+
+  .timeline > div {
+    width: 100%;
+    max-width: 380px;
+    min-width: auto;
+    max-height: none;
+    padding: 20px;
+  }
+
+  .timeline > div:hover {
+    max-height: none;
+  }
+
+  /* Show images on mobile */
+  .timeline > div img {
+    display: block !important;
+  }
+
+  .timeline > div p {
+    display: block !important;
+  }
+
   /* Adjust card headings for mobile */
-  section h2 {
+  .timeline h2 {
     font-size: 24px;
   }
 
-  section h3 {
+  .timeline h3 {
     font-size: 18px;
   }
 
@@ -263,21 +365,21 @@ body > p {
     margin-bottom: 20px;
   }
 
-  section > div {
+  .timeline > div {
     max-width: 320px;
     padding: 18px;
     border-radius: 15px;
   }
 
-  section h2 {
+  .timeline h2 {
     font-size: 22px;
   }
 
-  section h3 {
+  .timeline h3 {
     font-size: 16px;
   }
 
-  section p {
+  .timeline p {
     font-size: 15px;
   }
 
